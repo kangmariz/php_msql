@@ -55,46 +55,62 @@ if (isset($_POST['add'])) {
     <title>Guest Management</title>
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-900 dark:text-gray-200">
+
+    <header class="bg-gradient-to-r from-green-400 to-blue-500 p-6 text-white text-center text-3xl font-bold shadow-md">
+        Guest Management System
+    </header>
 
     <div class="container mx-auto p-8">
-        <h1 class="text-2xl font-bold text-center mb-6">Add a New Guest</h1>
+        <div class="max-w-lg mx-auto bg-white dark:bg-gray-800 p-6 rounded-xl shadow-xl">
+            <h1 class="text-2xl font-bold text-center mb-4">Add a New Guest</h1>
+            
+            <form method="post" action="" enctype="multipart/form-data">
+                <div class="mb-4">
+                    <label class="block font-semibold">First Name</label>
+                    <input type="text" name="first_name" required class="w-full p-3 border rounded-md">
+                </div>
 
-        <form method="post" action="" enctype="multipart/form-data" class="max-w-md mx-auto bg-white p-6 rounded-lg shadow-lg">
-            <label class="block mb-2 font-semibold">First Name:</label>
-            <input type="text" name="first_name" required class="w-full p-2 border rounded-md mb-4">
+                <div class="mb-4">
+                    <label class="block font-semibold">Last Name</label>
+                    <input type="text" name="last_name" required class="w-full p-3 border rounded-md">
+                </div>
 
-            <label class="block mb-2 font-semibold">Last Name:</label>
-            <input type="text" name="last_name" required class="w-full p-2 border rounded-md mb-4">
+                <div class="mb-4">
+                    <label class="block font-semibold">Email</label>
+                    <input type="email" name="email" required class="w-full p-3 border rounded-md">
+                </div>
 
-            <label class="block mb-2 font-semibold">Email:</label>
-            <input type="email" name="email" required class="w-full p-2 border rounded-md mb-4">
+                <div class="mb-4">
+                    <label class="block font-semibold">Photo</label>
+                    <input type="file" name="photo" class="w-full p-3 border rounded-md">
+                </div>
 
-            <label class="block mb-2 font-semibold">Photo:</label>
-            <input type="file" name="photo" class="w-full p-2 border rounded-md mb-4">
+                <div class="mb-4">
+                    <label class="block font-semibold">Upload Document</label>
+                    <input type="file" name="document" class="w-full p-3 border rounded-md">
+                </div>
 
-            <label class="block mb-2 font-semibold">Upload Document:</label>
-            <input type="file" name="document" class="w-full p-2 border rounded-md mb-4">
+                <button type="submit" name="add" class="w-full bg-green-500 text-white py-3 rounded-md hover:bg-green-600 transition font-semibold">
+                    Add Guest
+                </button>
+            </form>
+        </div>
 
-            <button type="submit" name="add" class="w-full bg-green-500 text-white py-2 rounded-md hover:bg-green-600 transition">
-                Add Guest
-            </button>
-        </form>
-
-        <h2 class="text-xl font-semibold text-center mt-8">Guest Table View</h2>
+        <h2 class="text-xl font-semibold text-center mt-10">Guest Table</h2>
 
         <div class="mt-6 overflow-x-auto">
-            <table class="w-full max-w-7xl mx-auto bg-white shadow-md rounded-lg overflow-hidden">
+            <table class="w-full max-w-7xl mx-auto bg-white dark:bg-gray-800 shadow-md rounded-lg overflow-hidden">
                 <thead class="bg-green-500 text-white">
                     <tr>
-                        <th class="p-3">ID</th>
-                        <th class="p-3">Photo</th>
-                        <th class="p-3">Document</th>
-                        <th class="p-3">First Name</th>
-                        <th class="p-3">Last Name</th>
-                        <th class="p-3">Email</th>
-                        <th class="p-3">Registration Date</th>
-                        <th class="p-3">Actions</th>
+                        <th class="p-4">ID</th>
+                        <th class="p-4">Photo</th>
+                        <th class="p-4">Document</th>
+                        <th class="p-4">First Name</th>
+                        <th class="p-4">Last Name</th>
+                        <th class="p-4">Email</th>
+                        <th class="p-4">Registration Date</th>
+                        <th class="p-4">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -104,9 +120,9 @@ if (isset($_POST['add'])) {
 
                 if ($result->num_rows > 0) {
                     while ($row = $result->fetch_assoc()) {
-                        echo "<tr class='border-b hover:bg-gray-100 transition'>
-                                <td class='p-3 text-center'>{$row['id']}</td>
-                                <td class='p-3 text-center'>";
+                        echo "<tr class='border-b dark:border-gray-700 hover:bg-gray-100 dark:hover:bg-gray-700 transition'>
+                                <td class='p-4 text-center'>{$row['id']}</td>
+                                <td class='p-4 text-center'>";
                         
                         if (!empty($row['photo'])) {
                             echo "<img src='{$row['photo']}' alt='Guest Photo' class='w-12 h-12 rounded-full mx-auto'>";
@@ -115,22 +131,26 @@ if (isset($_POST['add'])) {
                         }
 
                         echo "</td>
-                                <td class='p-3 text-center'>";
+                                <td class='p-4 text-center'>";
                         
                         if (!empty($row['document'])) {
-                            echo "<a href='{$row['document']}' class='text-blue-500 underline' target='_blank'>Document</a>";
+                            echo "<a href='{$row['document']}' class='text-blue-500 underline' target='_blank'>View</a>";
                         } else {
                             echo "<span class='text-gray-500'>No document</span>";
                         }
 
                         echo "</td>
-                                <td class='p-3 text-center'>{$row['first_name']}</td>
-                                <td class='p-3 text-center'>{$row['last_name']}</td>
-                                <td class='p-3 text-center'>{$row['email']}</td>
-                                <td class='p-3 text-center'>{$row['reg_date']}</td>
-                                <td class='p-3 text-center'>
-                                    <a href='edit.php?edit_id={$row['id']}' class='bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition'>Edit</a>
-                                    <a href='delete.php?delete_id={$row['id']}' class='bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition' onclick='return confirm(\"Are you sure you want to delete?\")'>Delete</a>
+                                <td class='p-4 text-center'>{$row['first_name']}</td>
+                                <td class='p-4 text-center'>{$row['last_name']}</td>
+                                <td class='p-4 text-center'>{$row['email']}</td>
+                                <td class='p-4 text-center'>{$row['reg_date']}</td>
+                                <td class='p-4 text-center flex justify-center space-x-2'>
+                                    <a href='edit.php?edit_id={$row['id']}' class='bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition'>
+                                        Edit
+                                    </a>
+                                    <a href='delete.php?delete_id={$row['id']}' class='bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition' onclick='return confirm(\"Are you sure?\")'>
+                                        Delete
+                                    </a>
                                 </td>
                               </tr>";
                     }
